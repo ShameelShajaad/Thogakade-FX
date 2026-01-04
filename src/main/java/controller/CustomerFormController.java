@@ -71,7 +71,7 @@ public class CustomerFormController {
 
     @FXML
     void btnReloadOnAction(ActionEvent event) {
-
+        loadTable();
     }
 
     public void initialize(){
@@ -80,6 +80,10 @@ public class CustomerFormController {
                 "Ms",
                 "Miss"
         );
+    }
+
+    private void loadTable(){
+
     }
 
 }
