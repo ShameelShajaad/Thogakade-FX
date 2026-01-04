@@ -23,9 +23,9 @@ public class CustomerTM {
     private String province;
     private String postalCode;
 
-    public CustomerTM(String id, String name, Date dob, double salary, String address, String city, String province, String postalCode) {
+    public CustomerTM(String id, String title, String name, Date dob, double salary, String address, String city, String province, String postalCode) {
         this.id = id;
-        this.name = name;
+        this.name = title+" "+name;
         this.dob = dob;
         this.salary = salary;
         this.address = address;
