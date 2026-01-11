@@ -153,6 +153,7 @@ public class CustomerFormController implements Initializable {
                     resultSet.getString(9)
             );
 
+            setTextToValues(customer);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -213,4 +214,15 @@ public class CustomerFormController implements Initializable {
         loadTable();
     }
 
+    private void setTextToValues(Customer customer) {
+        txtId.setText(customer.getId());
+        cmbTitle.setValue(customer.getTitle());
+        txtName.setText(customer.getName());
+        txtDob.setValue(customer.getDob());
+        txtSalary.setText(String.valueOf((customer.getSalary())));
+        txtAddress.setText(customer.getAddress());
+        txtCity.setText(customer.getCity());
+        txtProvince.setText(customer.getProvince());
+        txtPostalCode.setText(customer.getPostalCode());
+    }
 }
