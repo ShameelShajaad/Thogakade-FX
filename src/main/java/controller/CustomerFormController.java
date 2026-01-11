@@ -5,16 +5,21 @@ import com.jfoenix.controls.JFXTextField;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import model.Customer;
 import model.TM.CustomerTM;
 
+import java.net.URL;
 import java.sql.*;
+import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.ResourceBundle;
 
-public class CustomerFormController {
+public class CustomerFormController implements Initializable {
 
     @FXML
     private JFXComboBox cmbTitle;
@@ -72,20 +77,25 @@ public class CustomerFormController {
 
     @FXML
     void btnAddCustomerOnAction(ActionEvent event) {
+        String id = txtId.getText();
+        String title = cmbTitle.getValue().toString();
+        String name = txtName.getText();
+        String address = txtAddress.getText();
+        LocalDate dob = txtDob.getValue();
+        double salary = Double.parseDouble(txtSalary.getText());
+        String city = txtCity.getText();
+        String province = txtProvince.getText();
+        String postalCode = txtPostalCode.getText();
+
+        Customer customer = new Customer(id, title, name, address, dob, salary, city, province, postalCode);
+
+        System.out.println(customer);
 
     }
 
     @FXML
     void btnReloadOnAction(ActionEvent event) {
         loadTable();
-    }
-
-    public void initialize() {
-        cmbTitle.getItems().addAll(
-                "Mr",
-                "Ms",
-                "Miss"
-        );
     }
 
     private void loadTable() {
@@ -132,4 +142,12 @@ public class CustomerFormController {
         }
     }
 
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        cmbTitle.getItems().addAll(
+                "Mr",
+                "Ms",
+                "Miss"
+        );
+    }
 }
