@@ -6,6 +6,7 @@ import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -80,23 +81,49 @@ public class CustomerFormController implements Initializable {
         String id = txtId.getText();
         String title = cmbTitle.getValue().toString();
         String name = txtName.getText();
-        String address = txtAddress.getText();
         LocalDate dob = txtDob.getValue();
         double salary = Double.parseDouble(txtSalary.getText());
+        String address = txtAddress.getText();
         String city = txtCity.getText();
         String province = txtProvince.getText();
         String postalCode = txtPostalCode.getText();
 
-        Customer customer = new Customer(id, title, name, address, dob, salary, city, province, postalCode);
+        Customer customer = new Customer(id, title, name, dob, salary, address, city, province, postalCode);
 
         System.out.println(customer);
 
+        try {
+            Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/Thogakade", "root", "1234");
+
+            PreparedStatement psTm = connection.prepareStatement("INSERT INTO customer VALUES(?,?,?,?,?,?,?,?,?)");
+
+            psTm.setString(1, customer.getId());
+            psTm.setString(2, customer.getTitle());
+            psTm.setString(3, customer.getName());
+            psTm.setObject(4, customer.getDob());
+            psTm.setDouble(5, customer.getSalary());
+            psTm.setString(6, customer.getAddress());
+            psTm.setString(7, customer.getCity());
+            psTm.setString(8, customer.getProvince());
+            psTm.setString(9, customer.getPostalCode());
+
+            if (psTm.executeUpdate() > 0) {
+                new Alert(Alert.AlertType.CONFIRMATION, "Customer Added").show();
+                loadTable();
+            } else {
+                new Alert(Alert.AlertType.ERROR, "Customer not added");
+            }
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @FXML
     void btnReloadOnAction(ActionEvent event) {
         loadTable();
     }
+
 
     private void loadTable() {
 
@@ -149,5 +176,6 @@ public class CustomerFormController implements Initializable {
                 "Ms",
                 "Miss"
         );
+        loadTable();
     }
 }

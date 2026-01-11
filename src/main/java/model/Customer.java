@@ -16,9 +16,9 @@ public class Customer {
     String id;
     String title;
     String name;
-    String address;
     LocalDate dob;
     double salary;
+    String address;
     String city;
     String province;
     String postalCode;
