@@ -48,5 +48,15 @@
                 <Font name="System Bold" size="15.0" />
             </font>
         </JFXButton>
+      <JFXButton layoutX="447.0" layoutY="356.0" onAction="#btnDeleteOnAction" prefHeight="26.0" prefWidth="148.0" style="-fx-background-color: #C13D29;" text="Delete" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="15.0" />
+         </font>
+      </JFXButton>
+      <JFXButton layoutX="281.0" layoutY="356.0" onAction="#btnSearchOnAction" prefHeight="26.0" prefWidth="148.0" style="-fx-background-color: #3798DC;" text="Search" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="15.0" />
+         </font>
+      </JFXButton>
     </children>
 </AnchorPane>
