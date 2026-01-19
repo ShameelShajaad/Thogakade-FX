@@ -76,7 +76,7 @@ public class ItemFormController implements Initializable {
 
             psTm.setString(1, item.getCode());
             psTm.setString(2, item.getDescription());
-            psTm.setString(3, item.getPackSize()+item.getUnit());
+            psTm.setString(3, item.getPackSize() + item.getUnit());
             psTm.setDouble(4, item.getPrice());
             psTm.setInt(5, item.getQuantity());
 
@@ -104,6 +104,35 @@ public class ItemFormController implements Initializable {
 
     @FXML
     void btnSearchOnAction(ActionEvent event) {
+
+        try {
+            Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/Thogakade", "root", "1234");
+
+            PreparedStatement psTm = connection.prepareStatement("SELECT * FROM item WHERE ItemCode = ?");
+
+            psTm.setString(1, txtItemCode.getText());
+            ResultSet resultSet = psTm.executeQuery();
+
+            resultSet.next();
+
+            String string = resultSet.getString(3);
+            String packSize = string.replaceAll("[^0-9]", "");
+            String unit = string.replaceAll("[0-9]", "");
+
+
+            Item item = new Item(
+                    resultSet.getString(1),
+                    resultSet.getString(2),
+                    packSize,
+                    unit,
+                    resultSet.getDouble(4),
+                    resultSet.getInt(5)
+            );
+
+            setTextToValues(item);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
 
     }
 
