@@ -18,6 +18,7 @@ import java.net.URL;
 import java.sql.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.ResourceBundle;
 
 public class CustomerFormController implements Initializable {
@@ -26,31 +27,31 @@ public class CustomerFormController implements Initializable {
     private JFXComboBox cmbTitle;
 
     @FXML
-    private TableColumn colAddress;
+    private TableColumn<CustomerTM, String> colAddress;
 
     @FXML
-    private TableColumn colCity;
+    private TableColumn<CustomerTM, String> colCity;
 
     @FXML
-    private TableColumn colDob;
+    private TableColumn<CustomerTM, Date> colDob;
 
     @FXML
-    private TableColumn colId;
+    private TableColumn<CustomerTM, String> colId;
 
     @FXML
-    private TableColumn colName;
+    private TableColumn<CustomerTM, String> colName;
 
     @FXML
-    private TableColumn colPostalCode;
+    private TableColumn<CustomerTM, String> colPostalCode;
 
     @FXML
-    private TableColumn colProvince;
+    private TableColumn<CustomerTM, String> colProvince;
 
     @FXML
-    private TableColumn colSalary;
+    private TableColumn<CustomerTM, Double> colSalary;
 
     @FXML
-    private TableView tblCustomers;
+    private TableView<CustomerTM> tblCustomers;
 
     @FXML
     private JFXTextField txtAddress;

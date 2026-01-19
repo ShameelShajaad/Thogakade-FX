@@ -6,6 +6,7 @@ import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -21,25 +22,25 @@ import java.util.ResourceBundle;
 public class ItemFormController implements Initializable {
 
     @FXML
-    private TableColumn clmCode;
+    private TableColumn<ItemTM, String> clmCode;
 
     @FXML
-    private TableColumn clmDescription;
+    private TableColumn<ItemTM, String> clmDescription;
 
     @FXML
-    private TableColumn clmPackSize;
+    private TableColumn<ItemTM, String> clmPackSize;
 
     @FXML
-    private TableColumn clmPrice;
+    private TableColumn<ItemTM, Double> clmPrice;
 
     @FXML
-    private TableColumn clmQuantity;
+    private TableColumn<ItemTM, Integer> clmQuantity;
 
     @FXML
     private JFXComboBox cmbUnit;
 
     @FXML
-    private TableView tblItems;
+    private TableView<ItemTM> tblItems;
 
     @FXML
     private JFXTextField txtDescription;
@@ -59,7 +60,36 @@ public class ItemFormController implements Initializable {
 
     @FXML
     void btnAddItemOnAction(ActionEvent event) {
+        String code = txtItemCode.getText();
+        String description = txtDescription.getText();
+        String packSize = txtPackSize.getText();
+        String unit = cmbUnit.getValue().toString();
+        double price = Double.parseDouble(txtPrice.getText());
+        int quantity = Integer.parseInt(txtQuantity.getText());
 
+        Item item = new Item(code, description, packSize, unit, price, quantity);
+
+        try {
+            Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/Thogakade", "root", "1234");
+
+            PreparedStatement psTm = connection.prepareStatement("INSERT INTO item VALUES (?,?,?,?,?)");
+
+            psTm.setString(1, item.getCode());
+            psTm.setString(2, item.getDescription());
+            psTm.setString(3, item.getPackSize()+item.getUnit());
+            psTm.setDouble(4, item.getPrice());
+            psTm.setInt(5, item.getQuantity());
+
+            if (psTm.executeUpdate() > 0) {
+                new Alert(Alert.AlertType.CONFIRMATION, "Item Added").show();
+                loadTable();
+            } else {
+                new Alert(Alert.AlertType.ERROR, "Item not Added").show();
+            }
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @FXML
@@ -77,14 +107,14 @@ public class ItemFormController implements Initializable {
 
     }
 
-    private void loadTable(){
+    private void loadTable() {
         clmCode.setCellValueFactory(new PropertyValueFactory<>("code"));
         clmDescription.setCellValueFactory(new PropertyValueFactory<>("description"));
         clmPackSize.setCellValueFactory(new PropertyValueFactory<>("packSize"));
         clmQuantity.setCellValueFactory(new PropertyValueFactory<>("quantity"));
         clmPrice.setCellValueFactory(new PropertyValueFactory<>("price"));
 
-        ArrayList<ItemTM> ItemArrayList=new ArrayList<>();
+        ArrayList<ItemTM> ItemArrayList = new ArrayList<>();
 
         try {
             Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/Thogakade", "root", "1234");
@@ -93,7 +123,7 @@ public class ItemFormController implements Initializable {
 
             ResultSet resultSet = statement.executeQuery("SELECT * FROM item");
 
-            while (resultSet.next()){
+            while (resultSet.next()) {
                 ItemArrayList.add(
                         new ItemTM(
                                 resultSet.getString(1),
