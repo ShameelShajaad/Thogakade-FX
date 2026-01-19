@@ -4,31 +4,36 @@ import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXTextField;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
 
-public class ItemFormController {
+import java.net.URL;
+import java.util.ResourceBundle;
 
-    @FXML
-    private TableColumn<?, ?> clmCode;
-
-    @FXML
-    private TableColumn<?, ?> clmDescription;
+public class ItemFormController implements Initializable {
 
     @FXML
-    private TableColumn<?, ?> clmPackSize;
+    private TableColumn clmCode;
 
     @FXML
-    private TableColumn<?, ?> clmPrice;
+    private TableColumn clmDescription;
 
     @FXML
-    private TableColumn<?, ?> clmQuantity;
+    private TableColumn clmPackSize;
 
     @FXML
-    private JFXComboBox<?> cmbUnit;
+    private TableColumn clmPrice;
 
     @FXML
-    private TableView<?> tblItems;
+    private TableColumn clmQuantity;
+
+    @FXML
+    private JFXComboBox cmbUnit;
+
+    @FXML
+    private TableView tblItems;
 
     @FXML
     private JFXTextField txtDescription;
@@ -45,14 +50,40 @@ public class ItemFormController {
     @FXML
     private JFXTextField txtQuantity;
 
+
     @FXML
     void btnAddItemOnAction(ActionEvent event) {
 
     }
 
     @FXML
-    void btnReloadOnAction(ActionEvent event) {
+    void btnDeleteOnAction(ActionEvent event) {
 
     }
 
+    @FXML
+    void btnReloadOnAction(ActionEvent event) {
+        loadTable();
+    }
+
+    @FXML
+    void btnSearchOnAction(ActionEvent event) {
+
+    }
+
+    private void loadTable(){
+        clmCode.setCellValueFactory(new PropertyValueFactory<>("code"));
+        clmDescription.setCellValueFactory(new PropertyValueFactory<>("description"));
+        clmPackSize.setCellValueFactory(new PropertyValueFactory<>("packSize"));
+        clmQuantity.setCellValueFactory(new PropertyValueFactory<>("quantity"));
+        clmPrice.setCellValueFactory(new PropertyValueFactory<>("price"));
+    }
+
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        cmbUnit.getItems().addAll(
+                "kg",
+                "g"
+        );
+    }
 }

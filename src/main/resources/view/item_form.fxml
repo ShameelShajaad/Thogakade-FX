@@ -19,21 +19,21 @@
       </Label>
       <JFXTextField fx:id="txtItemCode" layoutX="55.0" layoutY="124.0" prefHeight="26.0" prefWidth="234.0" promptText="Item Code" />
       <JFXTextField fx:id="txtDescription" layoutX="365.0" layoutY="124.0" prefHeight="26.0" prefWidth="549.0" promptText="Description" />
-      <JFXTextField fx:id="txtPackSize" layoutX="55.0" layoutY="203.0" prefHeight="26.0" prefWidth="186.0" promptText="pack size" />
-      <JFXComboBox fx:id="cmbUnit" layoutX="316.0" layoutY="204.0" prefHeight="26.0" prefWidth="103.0" promptText="unit" />
-      <JFXTextField fx:id="txtQuantity" layoutX="743.0" layoutY="203.0" prefHeight="26.0" prefWidth="172.0" promptText="quantity" />
-      <JFXTextField fx:id="txtPrice" layoutX="465.0" layoutY="204.0" prefHeight="26.0" prefWidth="234.0" promptText="price" />
-      <JFXButton layoutX="775.0" layoutY="278.0" onAction="#btnAddItemOnAction" prefHeight="26.0" prefWidth="148.0" ripplerFill="WHITE" style="-fx-background-color: #29AD61;" text="Add Item" textFill="WHITE">
+      <JFXTextField fx:id="txtPackSize" layoutX="55.0" layoutY="213.0" prefHeight="26.0" prefWidth="186.0" promptText="pack size" />
+      <JFXComboBox fx:id="cmbUnit" layoutX="316.0" layoutY="214.0" prefHeight="26.0" prefWidth="103.0" promptText="unit" />
+      <JFXTextField fx:id="txtQuantity" layoutX="743.0" layoutY="213.0" prefHeight="26.0" prefWidth="172.0" promptText="quantity" />
+      <JFXTextField fx:id="txtPrice" layoutX="465.0" layoutY="214.0" prefHeight="26.0" prefWidth="234.0" promptText="price" />
+      <JFXButton layoutX="776.0" layoutY="301.0" onAction="#btnAddItemOnAction" prefHeight="26.0" prefWidth="148.0" ripplerFill="WHITE" style="-fx-background-color: #29AD61;" text="Add Item" textFill="WHITE">
          <font>
             <Font name="System Bold" size="15.0" />
          </font>
       </JFXButton>
-      <JFXButton layoutX="626.0" layoutY="278.0" onAction="#btnReloadOnAction" prefHeight="26.0" prefWidth="133.0" ripplerFill="WHITE" style="-fx-background-color: #F49C14;" text="Reload" textFill="WHITE">
+      <JFXButton layoutX="627.0" layoutY="301.0" onAction="#btnReloadOnAction" prefHeight="26.0" prefWidth="133.0" ripplerFill="WHITE" style="-fx-background-color: #F49C14;" text="Reload" textFill="WHITE">
          <font>
             <Font name="System Bold" size="15.0" />
          </font>
       </JFXButton>
-      <TableView fx:id="tblItems" layoutX="14.0" layoutY="334.0" prefHeight="314.0" prefWidth="904.0" stylesheets="@../../../../../Thogakade-v2/src/main/resources/css/style.css">
+      <TableView fx:id="tblItems" layoutX="13.0" layoutY="369.0" prefHeight="279.0" prefWidth="904.0" stylesheets="@../../../../../Thogakade-v2/src/main/resources/css/style.css">
          <columns>
             <TableColumn fx:id="clmCode" prefWidth="93.60000896453857" text="Code" />
             <TableColumn fx:id="clmDescription" prefWidth="388.00001525878906" text="Description" />
@@ -42,5 +42,15 @@
             <TableColumn fx:id="clmPrice" prefWidth="173.5999755859375" text="Price" />
          </columns>
       </TableView>
+      <JFXButton layoutX="457.0" layoutY="301.0" onAction="#btnDeleteOnAction" prefHeight="26.0" prefWidth="148.0" style="-fx-background-color: #C13D29;" text="Delete" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="15.0" />
+         </font>
+      </JFXButton>
+      <JFXButton layoutX="291.0" layoutY="301.0" onAction="#btnSearchOnAction" prefHeight="26.0" prefWidth="148.0" style="-fx-background-color: #3798DC;" text="Search" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="15.0" />
+         </font>
+      </JFXButton>
    </children>
 </AnchorPane>
