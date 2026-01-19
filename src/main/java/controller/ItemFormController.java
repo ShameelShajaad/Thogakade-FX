@@ -9,6 +9,8 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import model.Customer;
+import model.Item;
 import model.TM.ItemTM;
 
 import java.net.URL;
@@ -117,5 +119,14 @@ public class ItemFormController implements Initializable {
                 "g"
         );
         loadTable();
+    }
+
+    private void setTextToValues(Item item) {
+        txtItemCode.setText(item.getCode());
+        txtDescription.setText(item.getDescription());
+        txtPackSize.setText(item.getPackSize());
+        cmbUnit.setValue(item.getUnit());
+        txtPrice.setText(String.valueOf(item.getPrice()));
+        txtQuantity.setText(String.valueOf(item.getQuantity()));
     }
 }
