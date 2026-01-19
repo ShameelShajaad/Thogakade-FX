@@ -1,14 +1,46 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXComboBox?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="controller.ItemFormController"
-            prefHeight="400.0" prefWidth="600.0">
 
+<AnchorPane prefHeight="662.0" prefWidth="937.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ItemFormController">
+   <children>
+      <Label alignment="CENTER" prefHeight="84.0" prefWidth="938.0" style="-fx-background-color: #024488;" text="Item Form" textFill="WHITE">
+         <font>
+            <Font name="System Bold Italic" size="40.0" />
+         </font>
+      </Label>
+      <JFXTextField fx:id="txtItemCode" layoutX="55.0" layoutY="124.0" prefHeight="26.0" prefWidth="234.0" promptText="Item Code" />
+      <JFXTextField fx:id="txtDescription" layoutX="365.0" layoutY="124.0" prefHeight="26.0" prefWidth="549.0" promptText="Description" />
+      <JFXTextField fx:id="txtPackSize" layoutX="55.0" layoutY="203.0" prefHeight="26.0" prefWidth="186.0" promptText="pack size" />
+      <JFXComboBox fx:id="cmbUnit" layoutX="316.0" layoutY="204.0" prefHeight="26.0" prefWidth="103.0" promptText="unit" />
+      <JFXTextField fx:id="txtQuantity" layoutX="743.0" layoutY="203.0" prefHeight="26.0" prefWidth="172.0" promptText="quantity" />
+      <JFXTextField fx:id="txtPrice" layoutX="465.0" layoutY="204.0" prefHeight="26.0" prefWidth="234.0" promptText="price" />
+      <JFXButton layoutX="775.0" layoutY="278.0" onAction="#btnAddItemOnAction" prefHeight="26.0" prefWidth="148.0" ripplerFill="WHITE" style="-fx-background-color: #29AD61;" text="Add Item" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="15.0" />
+         </font>
+      </JFXButton>
+      <JFXButton layoutX="626.0" layoutY="278.0" onAction="#btnReloadOnAction" prefHeight="26.0" prefWidth="133.0" ripplerFill="WHITE" style="-fx-background-color: #F49C14;" text="Reload" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="15.0" />
+         </font>
+      </JFXButton>
+      <TableView fx:id="tblItems" layoutX="14.0" layoutY="334.0" prefHeight="314.0" prefWidth="904.0" stylesheets="@../../../../../Thogakade-v2/src/main/resources/css/style.css">
+         <columns>
+            <TableColumn fx:id="clmCode" prefWidth="93.60000896453857" text="Code" />
+            <TableColumn fx:id="clmDescription" prefWidth="388.00001525878906" text="Description" />
+            <TableColumn fx:id="clmPackSize" prefWidth="132.0" text="Pack Size" />
+            <TableColumn fx:id="clmQuantity" minWidth="0.0" prefWidth="107.20001220703125" text="Quantity" />
+            <TableColumn fx:id="clmPrice" prefWidth="173.5999755859375" text="Price" />
+         </columns>
+      </TableView>
+   </children>
 </AnchorPane>
