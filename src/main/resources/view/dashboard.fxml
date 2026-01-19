@@ -7,10 +7,9 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-
 <AnchorPane prefHeight="595.0" prefWidth="880.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.DashboardController">
    <children>
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#c4e2ff" height="595.0" layoutY="1.0" stroke="BLACK" strokeType="INSIDE" width="159.0" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#c4e2ff" height="661.0" layoutY="1.0" stroke="BLACK" strokeType="INSIDE" width="159.0" />
       <JFXButton layoutX="17.0" layoutY="257.0" onAction="#btnCustomerFormOnAction" prefHeight="34.0" prefWidth="125.0" style="-fx-background-color: #273c75;" text="Customer" textFill="WHITE">
          <font>
             <Font name="System Bold" size="15.0" />
@@ -31,6 +30,6 @@
             <Image url="@../img/logo.png" />
          </image>
       </ImageView>
-      <AnchorPane fx:id="dashRoot" layoutX="160.0" layoutY="-1.0" prefHeight="595.0" prefWidth="720.0" />
+      <AnchorPane fx:id="dashRoot" layoutX="160.0" layoutY="-1.0" prefHeight="662.0" prefWidth="937.0" />
    </children>
 </AnchorPane>
