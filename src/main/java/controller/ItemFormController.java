@@ -2,14 +2,18 @@ package controller;
 
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXTextField;
+import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import model.TM.ItemTM;
 
 import java.net.URL;
+import java.sql.*;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 public class ItemFormController implements Initializable {
@@ -77,6 +81,33 @@ public class ItemFormController implements Initializable {
         clmPackSize.setCellValueFactory(new PropertyValueFactory<>("packSize"));
         clmQuantity.setCellValueFactory(new PropertyValueFactory<>("quantity"));
         clmPrice.setCellValueFactory(new PropertyValueFactory<>("price"));
+
+        ArrayList<ItemTM> ItemArrayList=new ArrayList<>();
+
+        try {
+            Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/Thogakade", "root", "1234");
+
+            Statement statement = connection.createStatement();
+
+            ResultSet resultSet = statement.executeQuery("SELECT * FROM item");
+
+            while (resultSet.next()){
+                ItemArrayList.add(
+                        new ItemTM(
+                                resultSet.getString(1),
+                                resultSet.getString(2),
+                                resultSet.getString(3),
+                                resultSet.getDouble(4),
+                                resultSet.getInt(5)
+                        )
+                );
+            }
+
+            tblItems.setItems(FXCollections.observableArrayList(ItemArrayList));
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
     }
 
     @Override
@@ -85,5 +116,6 @@ public class ItemFormController implements Initializable {
                 "kg",
                 "g"
         );
+        loadTable();
     }
 }

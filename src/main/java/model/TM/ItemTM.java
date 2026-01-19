@@ -1,11 +1,13 @@
 package model.TM;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 @Data
 @NoArgsConstructor
+@AllArgsConstructor
 @ToString
 
 public class ItemTM {
@@ -16,11 +18,4 @@ public class ItemTM {
     private double price;
     private int quantity;
 
-    public ItemTM(String code, String description, String packSize, String unit, double price, int quantity) {
-        this.code = code;
-        this.description = description;
-        this.packSize = packSize + unit;
-        this.price = price;
-        this.quantity = quantity;
-    }
 }
