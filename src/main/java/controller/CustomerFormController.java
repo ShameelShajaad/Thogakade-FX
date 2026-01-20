@@ -113,7 +113,7 @@ public class CustomerFormController implements Initializable {
                 new Alert(Alert.AlertType.CONFIRMATION, "Customer Added").show();
                 loadTable();
             } else {
-                new Alert(Alert.AlertType.ERROR, "Customer not added");
+                new Alert(Alert.AlertType.ERROR, "Customer not added").show();
             }
 
         } catch (SQLException e) {
@@ -128,6 +128,24 @@ public class CustomerFormController implements Initializable {
 
     @FXML
     void btnDeleteOnAction(ActionEvent event) {
+
+        try {
+            Connection connection = DbConnection.getInstance().getConnection();
+
+            PreparedStatement psTm = connection.prepareStatement("DELETE FROM customer WHERE CustID = ?");
+
+            psTm.setString(1, txtId.getText());
+
+            if (psTm.executeUpdate() > 0) {
+                new Alert(Alert.AlertType.CONFIRMATION, "Customer Deleted").show();
+                loadTable();
+            } else {
+                new Alert(Alert.AlertType.ERROR, "Customer not Deleted").show();
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
 
     }
 
@@ -215,7 +233,7 @@ public class CustomerFormController implements Initializable {
         colPostalCode.setCellValueFactory(new PropertyValueFactory<>("postalCode"));
 
         tblCustomers.getSelectionModel().selectedItemProperty().addListener((observableValue, oldValue, newValue) -> {
-            assert newValue!=null;
+            assert newValue != null;
             setTextToValues(newValue);
         });
     }
@@ -234,7 +252,7 @@ public class CustomerFormController implements Initializable {
 
     private void setTextToValues(CustomerTM customerTM) {
         txtId.setText(customerTM.getId());
-        String[] name=customerTM.getName().split(" ",2);
+        String[] name = customerTM.getName().split(" ", 2);
         cmbTitle.setValue(name[0]);
         txtName.setText(name[1]);
         txtDob.setValue(customerTM.getDob());
