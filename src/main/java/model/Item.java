@@ -15,7 +15,6 @@ public class Item {
     String code;
     String description;
     String packSize;
-    String unit;
     double price;
     int quantity;
 

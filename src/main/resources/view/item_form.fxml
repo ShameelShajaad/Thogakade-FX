@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import com.jfoenix.controls.JFXButton?>
-<?import com.jfoenix.controls.JFXComboBox?>
 <?import com.jfoenix.controls.JFXTextField?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
@@ -18,10 +17,9 @@
       </Label>
       <JFXTextField fx:id="txtItemCode" layoutX="55.0" layoutY="124.0" prefHeight="26.0" prefWidth="234.0" promptText="Item Code" />
       <JFXTextField fx:id="txtDescription" layoutX="365.0" layoutY="124.0" prefHeight="26.0" prefWidth="549.0" promptText="Description" />
-      <JFXTextField fx:id="txtPackSize" layoutX="55.0" layoutY="213.0" prefHeight="26.0" prefWidth="186.0" promptText="pack size" />
-      <JFXComboBox fx:id="cmbUnit" layoutX="316.0" layoutY="214.0" prefHeight="26.0" prefWidth="103.0" promptText="unit" />
-      <JFXTextField fx:id="txtQuantity" layoutX="743.0" layoutY="213.0" prefHeight="26.0" prefWidth="172.0" promptText="quantity" />
-      <JFXTextField fx:id="txtPrice" layoutX="465.0" layoutY="214.0" prefHeight="26.0" prefWidth="234.0" promptText="price" />
+      <JFXTextField fx:id="txtPackSize" layoutX="55.0" layoutY="213.0" prefHeight="26.0" prefWidth="234.0" promptText="pack size" />
+      <JFXTextField fx:id="txtQuantity" layoutX="681.0" layoutY="213.0" prefHeight="26.0" prefWidth="234.0" promptText="quantity" />
+      <JFXTextField fx:id="txtPrice" layoutX="364.0" layoutY="214.0" prefHeight="26.0" prefWidth="234.0" promptText="price" />
       <JFXButton layoutX="776.0" layoutY="301.0" onAction="#btnAddItemOnAction" prefHeight="26.0" prefWidth="148.0" ripplerFill="WHITE" style="-fx-background-color: #29AD61;" text="Add Item" textFill="WHITE">
          <font>
             <Font name="System Bold" size="15.0" />

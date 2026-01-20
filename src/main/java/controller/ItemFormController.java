@@ -1,7 +1,7 @@
 package controller;
 
-import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXTextField;
+import db.DbConnection;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -10,7 +10,6 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
-import model.Customer;
 import model.Item;
 import model.TM.ItemTM;
 
@@ -37,9 +36,6 @@ public class ItemFormController implements Initializable {
     private TableColumn<ItemTM, Integer> clmQuantity;
 
     @FXML
-    private JFXComboBox cmbUnit;
-
-    @FXML
     private TableView<ItemTM> tblItems;
 
     @FXML
@@ -63,20 +59,19 @@ public class ItemFormController implements Initializable {
         String code = txtItemCode.getText();
         String description = txtDescription.getText();
         String packSize = txtPackSize.getText();
-        String unit = cmbUnit.getValue().toString();
         double price = Double.parseDouble(txtPrice.getText());
         int quantity = Integer.parseInt(txtQuantity.getText());
 
-        Item item = new Item(code, description, packSize, unit, price, quantity);
+        Item item = new Item(code, description, packSize, price, quantity);
 
         try {
-            Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/Thogakade", "root", "1234");
+            Connection connection = DbConnection.getInstance().getConnection();
 
             PreparedStatement psTm = connection.prepareStatement("INSERT INTO item VALUES (?,?,?,?,?)");
 
             psTm.setString(1, item.getCode());
             psTm.setString(2, item.getDescription());
-            psTm.setString(3, item.getPackSize() + item.getUnit());
+            psTm.setString(3, item.getPackSize());
             psTm.setDouble(4, item.getPrice());
             psTm.setInt(5, item.getQuantity());
 
@@ -106,7 +101,7 @@ public class ItemFormController implements Initializable {
     void btnSearchOnAction(ActionEvent event) {
 
         try {
-            Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/Thogakade", "root", "1234");
+            Connection connection = DbConnection.getInstance().getConnection();
 
             PreparedStatement psTm = connection.prepareStatement("SELECT * FROM item WHERE ItemCode = ?");
 
@@ -115,16 +110,11 @@ public class ItemFormController implements Initializable {
 
             resultSet.next();
 
-            String string = resultSet.getString(3);
-            String packSize = string.replaceAll("[^0-9]", "");
-            String unit = string.replaceAll("[0-9]", "");
-
 
             Item item = new Item(
                     resultSet.getString(1),
                     resultSet.getString(2),
-                    packSize,
-                    unit,
+                    resultSet.getString(3),
                     resultSet.getDouble(4),
                     resultSet.getInt(5)
             );
@@ -137,16 +127,10 @@ public class ItemFormController implements Initializable {
     }
 
     private void loadTable() {
-        clmCode.setCellValueFactory(new PropertyValueFactory<>("code"));
-        clmDescription.setCellValueFactory(new PropertyValueFactory<>("description"));
-        clmPackSize.setCellValueFactory(new PropertyValueFactory<>("packSize"));
-        clmQuantity.setCellValueFactory(new PropertyValueFactory<>("quantity"));
-        clmPrice.setCellValueFactory(new PropertyValueFactory<>("price"));
-
         ArrayList<ItemTM> ItemArrayList = new ArrayList<>();
 
         try {
-            Connection connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/Thogakade", "root", "1234");
+            Connection connection = DbConnection.getInstance().getConnection();
 
             Statement statement = connection.createStatement();
 
@@ -173,19 +157,32 @@ public class ItemFormController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        cmbUnit.getItems().addAll(
-                "kg",
-                "g"
-        );
         loadTable();
+
+        clmCode.setCellValueFactory(new PropertyValueFactory<>("code"));
+        clmDescription.setCellValueFactory(new PropertyValueFactory<>("description"));
+        clmPackSize.setCellValueFactory(new PropertyValueFactory<>("packSize"));
+        clmQuantity.setCellValueFactory(new PropertyValueFactory<>("quantity"));
+        clmPrice.setCellValueFactory(new PropertyValueFactory<>("price"));
+
+        tblItems.getSelectionModel().selectedItemProperty().addListener((observableValue, oldValue, newValue) -> {
+            setTextToValues(newValue);
+        });
     }
 
     private void setTextToValues(Item item) {
         txtItemCode.setText(item.getCode());
         txtDescription.setText(item.getDescription());
         txtPackSize.setText(item.getPackSize());
-        cmbUnit.setValue(item.getUnit());
         txtPrice.setText(String.valueOf(item.getPrice()));
         txtQuantity.setText(String.valueOf(item.getQuantity()));
+    }
+
+    private void setTextToValues(ItemTM itemTM) {
+        txtItemCode.setText(itemTM.getCode());
+        txtDescription.setText(itemTM.getDescription());
+        txtPackSize.setText(itemTM.getPackSize());
+        txtPrice.setText(String.valueOf(itemTM.getPrice()));
+        txtQuantity.setText(String.valueOf(itemTM.getQuantity()));
     }
 }
