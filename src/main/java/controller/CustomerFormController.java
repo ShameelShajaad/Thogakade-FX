@@ -179,7 +179,7 @@ public class CustomerFormController implements Initializable {
                                 resultSet.getString(1),
                                 resultSet.getString(2),
                                 resultSet.getString(3),
-                                resultSet.getDate(4),
+                                resultSet.getDate(4).toLocalDate(),
                                 resultSet.getDouble(5),
                                 resultSet.getString(6),
                                 resultSet.getString(7),
@@ -213,6 +213,11 @@ public class CustomerFormController implements Initializable {
         colCity.setCellValueFactory(new PropertyValueFactory<>("city"));
         colProvince.setCellValueFactory(new PropertyValueFactory<>("province"));
         colPostalCode.setCellValueFactory(new PropertyValueFactory<>("postalCode"));
+
+        tblCustomers.getSelectionModel().selectedItemProperty().addListener((observableValue, oldValue, newValue) -> {
+            assert newValue!=null;
+            setTextToValues(newValue);
+        });
     }
 
     private void setTextToValues(Customer customer) {
@@ -225,5 +230,18 @@ public class CustomerFormController implements Initializable {
         txtCity.setText(customer.getCity());
         txtProvince.setText(customer.getProvince());
         txtPostalCode.setText(customer.getPostalCode());
+    }
+
+    private void setTextToValues(CustomerTM customerTM) {
+        txtId.setText(customerTM.getId());
+        String[] name=customerTM.getName().split(" ",2);
+        cmbTitle.setValue(name[0]);
+        txtName.setText(name[1]);
+        txtDob.setValue(customerTM.getDob());
+        txtSalary.setText(String.valueOf((customerTM.getSalary())));
+        txtAddress.setText(customerTM.getAddress());
+        txtCity.setText(customerTM.getCity());
+        txtProvince.setText(customerTM.getProvince());
+        txtPostalCode.setText(customerTM.getPostalCode());
     }
 }

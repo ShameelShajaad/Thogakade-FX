@@ -166,7 +166,8 @@ public class ItemFormController implements Initializable {
         clmPrice.setCellValueFactory(new PropertyValueFactory<>("price"));
 
         tblItems.getSelectionModel().selectedItemProperty().addListener((observableValue, oldValue, newValue) -> {
-            setTextToValues(newValue);
+            assert newValue != null;
+            setTextToValues((ItemTM) newValue);
         });
     }
 
