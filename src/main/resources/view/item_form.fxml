@@ -9,7 +9,6 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-
 <AnchorPane prefHeight="662.0" prefWidth="937.0" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ItemFormController">
    <children>
       <Label alignment="CENTER" prefHeight="84.0" prefWidth="938.0" style="-fx-background-color: #024488;" text="Item Form" textFill="WHITE">
@@ -33,7 +32,7 @@
             <Font name="System Bold" size="15.0" />
          </font>
       </JFXButton>
-      <TableView fx:id="tblItems" layoutX="13.0" layoutY="369.0" prefHeight="279.0" prefWidth="904.0" stylesheets="@../../../../../Thogakade-v2/src/main/resources/css/style.css">
+      <TableView fx:id="tblItems" layoutX="13.0" layoutY="369.0" prefHeight="279.0" prefWidth="904.0" stylesheets="@../css/style.css">
          <columns>
             <TableColumn fx:id="clmCode" prefWidth="93.60000896453857" text="Code" />
             <TableColumn fx:id="clmDescription" prefWidth="388.00001525878906" text="Description" />

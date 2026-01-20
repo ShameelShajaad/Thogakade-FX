@@ -20,12 +20,12 @@
         <JFXTextField fx:id="txtId" layoutX="45.0" layoutY="114.0" prefHeight="26.0" prefWidth="234.0" promptText="ID" />
         <JFXComboBox fx:id="cmbTitle" layoutX="355.0" layoutY="115.0" prefHeight="26.0" prefWidth="234.0" promptText="Title" />
         <JFXTextField fx:id="txtName" layoutX="668.0" layoutY="115.0" prefHeight="26.0" prefWidth="234.0" promptText="Name" />
-        <JFXTextField fx:id="txtAddress" layoutX="45.0" layoutY="200.0" prefHeight="26.0" prefWidth="234.0" promptText="Address" />
-        <DatePicker fx:id="txtDob" layoutX="355.0" layoutY="200.0" prefHeight="26.0" prefWidth="234.0" />
-        <JFXTextField fx:id="txtSalary" layoutX="668.0" layoutY="200.0" prefHeight="26.0" prefWidth="234.0" promptText="Salary" />
-        <JFXTextField fx:id="txtCity" layoutX="45.0" layoutY="293.0" prefHeight="26.0" prefWidth="234.0" promptText="City" />
-        <JFXTextField fx:id="txtProvince" layoutX="355.0" layoutY="293.0" prefHeight="26.0" prefWidth="234.0" promptText="Province" />
-        <JFXTextField fx:id="txtPostalCode" layoutX="668.0" layoutY="293.0" prefHeight="26.0" prefWidth="234.0" promptText="Postal Code" />
+        <JFXTextField fx:id="txtAddress" layoutX="45.0" layoutY="194.0" prefHeight="26.0" prefWidth="234.0" promptText="Address" />
+        <DatePicker fx:id="txtDob" layoutX="355.0" layoutY="194.0" prefHeight="26.0" prefWidth="234.0" />
+        <JFXTextField fx:id="txtSalary" layoutX="668.0" layoutY="194.0" prefHeight="26.0" prefWidth="234.0" promptText="Salary" />
+        <JFXTextField fx:id="txtCity" layoutX="45.0" layoutY="283.0" prefHeight="26.0" prefWidth="234.0" promptText="City" />
+        <JFXTextField fx:id="txtProvince" layoutX="355.0" layoutY="283.0" prefHeight="26.0" prefWidth="234.0" promptText="Province" />
+        <JFXTextField fx:id="txtPostalCode" layoutX="668.0" layoutY="283.0" prefHeight="26.0" prefWidth="234.0" promptText="Postal Code" />
         <TableView fx:id="tblCustomers" layoutX="21.0" layoutY="409.0" prefHeight="237.0" prefWidth="898.0" stylesheets="@../css/style.css">
             <columns>
                 <TableColumn fx:id="colId" prefWidth="69.60000228881836" text="ID" />
