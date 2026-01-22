@@ -64,26 +64,14 @@ public class ItemFormController implements Initializable {
 
         Item item = new Item(code, description, packSize, price, quantity);
 
-        try {
-            Connection connection = DbConnection.getInstance().getConnection();
+        ItemServiceImpl itemService = new ItemServiceImpl();
+        boolean result = itemService.addItem(item);
 
-            PreparedStatement psTm = connection.prepareStatement("INSERT INTO item VALUES (?,?,?,?,?)");
-
-            psTm.setString(1, item.getCode());
-            psTm.setString(2, item.getDescription());
-            psTm.setString(3, item.getPackSize());
-            psTm.setDouble(4, item.getPrice());
-            psTm.setInt(5, item.getQuantity());
-
-            if (psTm.executeUpdate() > 0) {
-                new Alert(Alert.AlertType.CONFIRMATION, "Item Added").show();
-                loadTable();
-            } else {
-                new Alert(Alert.AlertType.ERROR, "Item not Added").show();
-            }
-
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
+        if (result) {
+            new Alert(Alert.AlertType.CONFIRMATION, "Item Added").show();
+            loadTable();
+        } else {
+            new Alert(Alert.AlertType.ERROR, "Item not Added").show();
         }
     }
 

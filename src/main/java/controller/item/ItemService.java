@@ -10,7 +10,7 @@ public interface ItemService {
 
     boolean updateItem(Item item);
 
-    boolean deleteItem(Item item);
+    boolean deleteItem(String id);
 
     Item searchItemById(String id);
 
