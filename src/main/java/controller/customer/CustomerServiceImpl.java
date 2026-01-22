@@ -1,12 +1,13 @@
 package controller.customer;
 
 import db.DbConnection;
+import javafx.collections.FXCollections;
 import javafx.scene.control.Alert;
 import model.Customer;
+import model.TM.CustomerTM;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import java.sql.*;
+import java.util.ArrayList;
 import java.util.List;
 
 public class CustomerServiceImpl implements CustomerService {
@@ -61,11 +62,69 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     public Customer searchCustomerById(String id) {
-        return null;
+
+        try {
+            Connection connection = DbConnection.getInstance().getConnection();
+
+            PreparedStatement psTm = connection.prepareStatement("SELECT * FROM customer WHERE CustID = ?");
+
+            psTm.setString(1, id);
+            ResultSet resultSet = psTm.executeQuery();
+
+            resultSet.next();
+
+            return new Customer(
+                    resultSet.getString(1),
+                    resultSet.getString(2),
+                    resultSet.getString(3),
+                    resultSet.getDate(4).toLocalDate(),
+                    resultSet.getDouble(5),
+                    resultSet.getString(6),
+                    resultSet.getString(7),
+                    resultSet.getString(8),
+                    resultSet.getString(9)
+            );
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
     }
 
     @Override
     public List<Customer> getAll() {
-        return List.of();
+
+        ArrayList<Customer> CustomerArrayList = new ArrayList<>();
+
+        try {
+            Connection connection = DbConnection.getInstance().getConnection();
+            System.out.println(connection);
+
+            Statement statement = connection.createStatement();
+
+            ResultSet resultSet = statement.executeQuery("SELECT * FROM Customer");
+
+            while (resultSet.next()) {
+                CustomerArrayList.add(
+                        new Customer(
+                                resultSet.getString(1),
+                                resultSet.getString(2),
+                                resultSet.getString(3),
+                                resultSet.getDate(4).toLocalDate(),
+                                resultSet.getDouble(5),
+                                resultSet.getString(6),
+                                resultSet.getString(7),
+                                resultSet.getString(8),
+                                resultSet.getString(9)
+                        )
+                );
+            }
+
+            return CustomerArrayList;
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
     }
 }

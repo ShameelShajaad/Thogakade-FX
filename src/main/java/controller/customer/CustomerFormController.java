@@ -20,6 +20,7 @@ import java.sql.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.ResourceBundle;
 
 public class CustomerFormController implements Initializable {
@@ -118,6 +119,7 @@ public class CustomerFormController implements Initializable {
 
         if (result) {
             new Alert(Alert.AlertType.CONFIRMATION, "Customer Deleted").show();
+            loadTable();
         } else {
             new Alert(Alert.AlertType.ERROR, "Customer not Deleted").show();
         }
@@ -126,67 +128,37 @@ public class CustomerFormController implements Initializable {
 
     @FXML
     void btnSearchOnAction(ActionEvent event) {
-        try {
-            Connection connection = DbConnection.getInstance().getConnection();
 
-            PreparedStatement psTm = connection.prepareStatement("SELECT * FROM customer WHERE CustID = ?");
+        CustomerServiceImpl customerService = new CustomerServiceImpl();
+        Customer customer = customerService.searchCustomerById(txtId.getText());
+        setTextToValues(customer);
 
-            psTm.setString(1, txtId.getText());
-            ResultSet resultSet = psTm.executeQuery();
-
-            resultSet.next();
-
-            Customer customer = new Customer(
-                    resultSet.getString(1),
-                    resultSet.getString(2),
-                    resultSet.getString(3),
-                    resultSet.getDate(4).toLocalDate(),
-                    resultSet.getDouble(5),
-                    resultSet.getString(6),
-                    resultSet.getString(7),
-                    resultSet.getString(8),
-                    resultSet.getString(9)
-            );
-
-            setTextToValues(customer);
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
     }
 
 
     private void loadTable() {
+
+        CustomerServiceImpl customerService = new CustomerServiceImpl();
+        List<Customer> Customers = customerService.getAll();
+
         ArrayList<CustomerTM> CustomerArrayList = new ArrayList<>();
+        Customers.forEach(customer -> {
+            CustomerArrayList.add(
+                    new CustomerTM(
+                            customer.getId(),
+                            customer.getTitle(),
+                            customer.getName(),
+                            customer.getDob(),
+                            customer.getSalary(),
+                            customer.getAddress(),
+                            customer.getCity(),
+                            customer.getProvince(),
+                            customer.getPostalCode()
+                    )
+            );
+        });
 
-        try {
-            Connection connection = DbConnection.getInstance().getConnection();
-            System.out.println(connection);
-
-            Statement statement = connection.createStatement();
-
-            ResultSet resultSet = statement.executeQuery("SELECT * FROM Customer");
-
-            while (resultSet.next()) {
-                CustomerArrayList.add(
-                        new CustomerTM(
-                                resultSet.getString(1),
-                                resultSet.getString(2),
-                                resultSet.getString(3),
-                                resultSet.getDate(4).toLocalDate(),
-                                resultSet.getDouble(5),
-                                resultSet.getString(6),
-                                resultSet.getString(7),
-                                resultSet.getString(8),
-                                resultSet.getString(9)
-                        )
-                );
-            }
-
-            tblCustomers.setItems(FXCollections.observableArrayList(CustomerArrayList));
-
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+        tblCustomers.setItems(FXCollections.observableArrayList(CustomerArrayList));
     }
 
     @Override
