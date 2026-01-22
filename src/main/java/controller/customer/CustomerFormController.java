@@ -94,30 +94,14 @@ public class CustomerFormController implements Initializable {
 
         System.out.println(customer);
 
-        try {
-            Connection connection = DbConnection.getInstance().getConnection();
+        CustomerServiceImpl customerService = new CustomerServiceImpl();
+        boolean result = customerService.addCustomer(customer);
 
-            PreparedStatement psTm = connection.prepareStatement("INSERT INTO customer VALUES(?,?,?,?,?,?,?,?,?)");
-
-            psTm.setString(1, customer.getId());
-            psTm.setString(2, customer.getTitle());
-            psTm.setString(3, customer.getName());
-            psTm.setObject(4, customer.getDob());
-            psTm.setDouble(5, customer.getSalary());
-            psTm.setString(6, customer.getAddress());
-            psTm.setString(7, customer.getCity());
-            psTm.setString(8, customer.getProvince());
-            psTm.setString(9, customer.getPostalCode());
-
-            if (psTm.executeUpdate() > 0) {
-                new Alert(Alert.AlertType.CONFIRMATION, "Customer Added").show();
-                loadTable();
-            } else {
-                new Alert(Alert.AlertType.ERROR, "Customer not added").show();
-            }
-
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
+        if (result) {
+            new Alert(Alert.AlertType.CONFIRMATION, "Customer Added").show();
+            loadTable();
+        } else {
+            new Alert(Alert.AlertType.ERROR, "Customer not Added").show();
         }
     }
 
