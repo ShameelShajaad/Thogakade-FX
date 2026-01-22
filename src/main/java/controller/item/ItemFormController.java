@@ -16,6 +16,7 @@ import model.TM.ItemTM;
 import java.net.URL;
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 
 public class ItemFormController implements Initializable {
@@ -106,31 +107,25 @@ public class ItemFormController implements Initializable {
     }
 
     private void loadTable() {
+
+        ItemServiceImpl itemService = new ItemServiceImpl();
+        List<Item> items = itemService.getAll();
+
         ArrayList<ItemTM> ItemArrayList = new ArrayList<>();
 
-        try {
-            Connection connection = DbConnection.getInstance().getConnection();
+        items.forEach(item -> {
+            ItemArrayList.add(
+                    new ItemTM(
+                            item.getCode(),
+                            item.getDescription(),
+                            item.getPackSize(),
+                            item.getPrice(),
+                            item.getQuantity()
+                    )
+            );
+        });
 
-            Statement statement = connection.createStatement();
-
-            ResultSet resultSet = statement.executeQuery("SELECT * FROM item");
-
-            while (resultSet.next()) {
-                ItemArrayList.add(
-                        new ItemTM(
-                                resultSet.getString(1),
-                                resultSet.getString(2),
-                                resultSet.getString(3),
-                                resultSet.getDouble(4),
-                                resultSet.getInt(5)
-                        )
-                );
-            }
-
-            tblItems.setItems(FXCollections.observableArrayList(ItemArrayList));
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+        tblItems.setItems(FXCollections.observableArrayList(ItemArrayList));
 
     }
 

@@ -1,15 +1,15 @@
 package controller.item;
 
 import db.DbConnection;
+import javafx.collections.FXCollections;
 import model.Item;
+import model.TM.ItemTM;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
+import java.util.ArrayList;
 import java.util.List;
 
-public class ItemServiceImpl implements ItemService{
+public class ItemServiceImpl implements ItemService {
     @Override
     public boolean addItem(Item item) {
 
@@ -24,7 +24,7 @@ public class ItemServiceImpl implements ItemService{
             psTm.setDouble(4, item.getPrice());
             psTm.setInt(5, item.getQuantity());
 
-            return  (psTm.executeUpdate() > 0);
+            return (psTm.executeUpdate() > 0);
 
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -85,6 +85,33 @@ public class ItemServiceImpl implements ItemService{
 
     @Override
     public List<Item> getAll() {
-        return List.of();
+
+        ArrayList<Item> ItemArrayList = new ArrayList<>();
+
+        try {
+            Connection connection = DbConnection.getInstance().getConnection();
+
+            Statement statement = connection.createStatement();
+
+            ResultSet resultSet = statement.executeQuery("SELECT * FROM item");
+
+            while (resultSet.next()) {
+                ItemArrayList.add(
+                        new Item(
+                                resultSet.getString(1),
+                                resultSet.getString(2),
+                                resultSet.getString(3),
+                                resultSet.getDouble(4),
+                                resultSet.getInt(5)
+                        )
+                );
+            }
+
+            return ItemArrayList;
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
     }
 }
