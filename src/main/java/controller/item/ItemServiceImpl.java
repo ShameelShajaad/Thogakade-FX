@@ -5,6 +5,7 @@ import model.Item;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -56,7 +57,30 @@ public class ItemServiceImpl implements ItemService{
 
     @Override
     public Item searchItemById(String id) {
-        return null;
+
+        try {
+            Connection connection = DbConnection.getInstance().getConnection();
+
+            PreparedStatement psTm = connection.prepareStatement("SELECT * FROM item WHERE ItemCode = ?");
+
+            psTm.setString(1, id);
+            ResultSet resultSet = psTm.executeQuery();
+
+            resultSet.next();
+
+
+            return new Item(
+                    resultSet.getString(1),
+                    resultSet.getString(2),
+                    resultSet.getString(3),
+                    resultSet.getDouble(4),
+                    resultSet.getInt(5)
+            );
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
     }
 
     @Override

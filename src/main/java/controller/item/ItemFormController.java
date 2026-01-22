@@ -98,29 +98,10 @@ public class ItemFormController implements Initializable {
     @FXML
     void btnSearchOnAction(ActionEvent event) {
 
-        try {
-            Connection connection = DbConnection.getInstance().getConnection();
+        ItemServiceImpl itemService = new ItemServiceImpl();
+        Item item = itemService.searchItemById(txtItemCode.getText());
 
-            PreparedStatement psTm = connection.prepareStatement("SELECT * FROM item WHERE ItemCode = ?");
-
-            psTm.setString(1, txtItemCode.getText());
-            ResultSet resultSet = psTm.executeQuery();
-
-            resultSet.next();
-
-
-            Item item = new Item(
-                    resultSet.getString(1),
-                    resultSet.getString(2),
-                    resultSet.getString(3),
-                    resultSet.getDouble(4),
-                    resultSet.getInt(5)
-            );
-
-            setTextToValues(item);
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+        setTextToValues(item);
 
     }
 
