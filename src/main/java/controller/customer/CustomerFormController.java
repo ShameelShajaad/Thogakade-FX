@@ -113,23 +113,14 @@ public class CustomerFormController implements Initializable {
     @FXML
     void btnDeleteOnAction(ActionEvent event) {
 
-        try {
-            Connection connection = DbConnection.getInstance().getConnection();
+        CustomerServiceImpl customerService = new CustomerServiceImpl();
+        boolean result = customerService.deleteCustomer(txtId.getText());
 
-            PreparedStatement psTm = connection.prepareStatement("DELETE FROM customer WHERE CustID = ?");
-
-            psTm.setString(1, txtId.getText());
-
-            if (psTm.executeUpdate() > 0) {
-                new Alert(Alert.AlertType.CONFIRMATION, "Customer Deleted").show();
-                loadTable();
-            } else {
-                new Alert(Alert.AlertType.ERROR, "Customer not Deleted").show();
-            }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
+        if (result) {
+            new Alert(Alert.AlertType.CONFIRMATION, "Customer Deleted").show();
+        } else {
+            new Alert(Alert.AlertType.ERROR, "Customer not Deleted").show();
         }
-
 
     }
 

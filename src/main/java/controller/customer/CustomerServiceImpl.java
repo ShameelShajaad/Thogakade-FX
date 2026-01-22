@@ -43,7 +43,20 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     public boolean deleteCustomer(String id) {
-        return false;
+
+        try {
+            Connection connection = DbConnection.getInstance().getConnection();
+
+            PreparedStatement psTm = connection.prepareStatement("DELETE FROM customer WHERE CustID = ?");
+
+            psTm.setString(1, id);
+
+            return (psTm.executeUpdate() > 0);
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
     }
 
     @Override
