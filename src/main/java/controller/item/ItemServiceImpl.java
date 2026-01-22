@@ -39,6 +39,18 @@ public class ItemServiceImpl implements ItemService{
     @Override
     public boolean deleteItem(String id) {
 
+        try {
+            Connection connection = DbConnection.getInstance().getConnection();
+
+            PreparedStatement psTm = connection.prepareStatement("DELETE FROM item WHERE ItemCode = ?");
+
+            psTm.setString(1, id);
+
+            return (psTm.executeUpdate() > 0);
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
 
     }
 

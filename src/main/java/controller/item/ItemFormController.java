@@ -78,6 +78,16 @@ public class ItemFormController implements Initializable {
     @FXML
     void btnDeleteOnAction(ActionEvent event) {
 
+        ItemServiceImpl itemService = new ItemServiceImpl();
+        boolean result = itemService.deleteItem(txtItemCode.getText());
+
+        if (result) {
+            new Alert(Alert.AlertType.CONFIRMATION, "Item Deleted").show();
+            loadTable();
+        } else {
+            new Alert(Alert.AlertType.ERROR, "Item not Deleted").show();
+        }
+
     }
 
     @FXML
