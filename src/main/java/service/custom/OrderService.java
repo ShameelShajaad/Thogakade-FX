@@ -1,4 +1,6 @@
 package service.custom;
 
-public interface OrderService {
+import service.SuperService;
+
+public interface OrderService extends SuperService {
 }

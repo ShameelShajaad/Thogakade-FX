@@ -14,7 +14,10 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import model.Customer;
 import model.TM.CustomerTM;
+import service.ServiceFactory;
+import service.custom.CustomerService;
 import service.custom.impl.CustomerServiceImpl;
+import util.ServiceType;
 
 import java.net.URL;
 import java.sql.*;
@@ -80,6 +83,8 @@ public class CustomerFormController implements Initializable {
     @FXML
     private JFXTextField txtSalary;
 
+    CustomerService serviceType = ServiceFactory.getInstance().getServiceType(ServiceType.CUSTOMER);
+
     @FXML
     void btnAddCustomerOnAction(ActionEvent event) {
         String id = txtId.getText();
@@ -96,10 +101,7 @@ public class CustomerFormController implements Initializable {
 
         System.out.println(customer);
 
-        CustomerServiceImpl customerService = new CustomerServiceImpl();
-        boolean result = customerService.addCustomer(customer);
-
-        if (result) {
+        if (serviceType.addCustomer(customer)) {
             new Alert(Alert.AlertType.CONFIRMATION, "Customer Added").show();
             loadTable();
         } else {
@@ -115,8 +117,7 @@ public class CustomerFormController implements Initializable {
     @FXML
     void btnDeleteOnAction(ActionEvent event) {
 
-        CustomerServiceImpl customerService = new CustomerServiceImpl();
-        boolean result = customerService.deleteCustomer(txtId.getText());
+        boolean result = serviceType.deleteCustomer(txtId.getText());
 
         if (result) {
             new Alert(Alert.AlertType.CONFIRMATION, "Customer Deleted").show();
@@ -130,9 +131,7 @@ public class CustomerFormController implements Initializable {
     @FXML
     void btnSearchOnAction(ActionEvent event) {
 
-        CustomerServiceImpl customerService = new CustomerServiceImpl();
-        Customer customer = customerService.searchCustomerById(txtId.getText());
-        setTextToValues(customer);
+        setTextToValues(serviceType.searchCustomerById(txtId.getText()));
 
     }
 
